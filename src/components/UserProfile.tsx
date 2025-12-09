@@ -70,11 +70,13 @@ export default function UserProfile({ showPoints, points, size = 'md' }: UserPro
   return (
     <div className="flex items-center gap-3">
       <div className={`${sizeClasses[size]} rounded-full overflow-hidden border-2 border-yellow-500 bg-gray-800`}>
-        <img
-          src={avatar}
-          alt={username}
-          className="w-full h-full object-cover"
-        />
+        {avatar && (
+          <img
+            src={avatar}
+            alt={username}
+            className="w-full h-full object-cover"
+          />
+        )}
       </div>
       <div>
         <p className={`${textSizeClasses[size]} font-semibold text-yellow-400`}>{username}</p>
