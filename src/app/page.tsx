@@ -1,65 +1,121 @@
-import Image from "next/image";
+'use client'
+
+import { useState } from 'react'
+import Logo from '@/components/Logo'
+import ConnectWallet from '@/components/ConnectWallet'
+import PointsDisplay from '@/components/PointsDisplay'
+import HorseCard from '@/components/HorseCard'
+import BettingPanel from '@/components/BettingPanel'
+import RaceTrack from '@/components/RaceTrack'
+import ScrollingStats from '@/components/ScrollingStats'
+import Leaderboard from '@/components/Leaderboard'
+import { usePoints } from '@/hooks/usePoints'
+import { useRace } from '@/hooks/useRace'
+import { useLeaderboard } from '@/hooks/useLeaderboard'
+import { HORSES } from '@/lib/horses'
 
 export default function Home() {
+  const { points, addPoints, deductPoints } = usePoints()
+  const { isRacing, result, pool, placeBet, startRace, resetRace } = useRace()
+  const { updateLeaderboard } = useLeaderboard()
+  const [selectedHorse, setSelectedHorse] = useState<number | null>(null)
+  const [myBet, setMyBet] = useState<{ horseId: number; amount: number } | null>(null)
+
+  const handleBet = (amount: number) => {
+    if (!selectedHorse || amount > points) return
+
+    deductPoints(amount)
+    placeBet(selectedHorse, amount)
+    setMyBet({ horseId: selectedHorse, amount })
+  }
+
+  const handleStartRace = async () => {
+    const raceResult = await startRace()
+
+    if (raceResult && myBet && raceResult.winnerId === myBet.horseId) {
+      // Winner! simplified: win the whole pool
+      const winnings = pool
+      addPoints(winnings)
+      updateLeaderboard(points + winnings, 1)
+      alert(`🎉 You won ${winnings.toLocaleString()} points!`)
+    } else {
+      alert('Better luck next time!')
+    }
+
+    // Reset for new round
+    setTimeout(() => {
+      resetRace()
+      setMyBet(null)
+      setSelectedHorse(null)
+    }, 5000)
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white p-4">
+      {/* Header */}
+      <header className="max-w-7xl mx-auto mb-8 flex justify-between items-center">
+        <Logo />
+        <div className="flex items-center gap-4">
+          <PointsDisplay points={points} addPoints={addPoints} />
+          <ConnectWallet />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </header>
+
+      {/* Scrolling Stats */}
+      <ScrollingStats horseId={selectedHorse || 1} />
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left: Horse Selection */}
+        <div className="lg:col-span-2 space-y-6">
+          <div className="bg-gray-900 border-2 border-yellow-500 rounded-xl p-6">
+            <h2 className="text-2xl font-bold text-yellow-400 mb-4">
+              Select Your Horse
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+              {HORSES.map(horse => (
+                <HorseCard
+                  key={horse.id}
+                  horse={horse}
+                  selected={selectedHorse === horse.id}
+                  onSelect={() => setSelectedHorse(horse.id)}
+                  disabled={isRacing || myBet !== null}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Race Track */}
+          <RaceTrack
+            isRacing={isRacing}
+            winnerId={result?.winnerId || null}
+            duration={result?.duration || 10000}
+          />
+
+          {/* Betting Panel */}
+          <BettingPanel
+            selectedHorse={selectedHorse}
+            points={points}
+            pool={pool}
+            onBet={handleBet}
+            onStartRace={handleStartRace}
+            disabled={isRacing}
+          />
         </div>
-      </main>
-    </div>
-  );
+
+        {/* Right: Leaderboard */}
+        <div className="lg:col-span-1">
+          <Leaderboard />
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="max-w-7xl mx-auto mt-12 text-center text-gray-500 text-sm">
+        <p>Horse Racing Game on Base Network</p>
+        <p className="mt-2">
+          🎮 Play for fun • Connect wallet to claim daily bonus and save your score
+        </p>
+      </footer>
+    </main>
+  )
 }
