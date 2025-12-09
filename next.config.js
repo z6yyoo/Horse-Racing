@@ -8,9 +8,15 @@ const nextConfig = {
             },
         ],
     },
-    turbopack: {},
-    webpack: (config) => {
-        config.resolve.fallback = { fs: false, net: false, tls: false }
+    webpack: (config, { isServer }) => {
+        config.resolve.fallback = {
+            ...config.resolve.fallback,
+            fs: false,
+            net: false,
+            tls: false,
+            crypto: false,
+        }
+
         config.externals.push(
             'pino-pretty',
             'lokijs',
@@ -20,8 +26,17 @@ const nextConfig = {
             '@metamask/sdk',
             'porto',
             '@safe-global/safe-apps-sdk',
-            '@safe-global/safe-apps-provider'
+            '@safe-global/safe-apps-provider',
+            'thread-stream',
+            'pino'
         )
+
+        // Ignore test files
+        config.module = {
+            ...config.module,
+            exprContextCritical: false,
+        }
+
         return config
     },
 }
