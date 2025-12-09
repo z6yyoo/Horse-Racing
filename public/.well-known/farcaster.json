@@ -1,36 +1,7 @@
 {
-    "accountAssociation": {
-        "header": "REPLACE_WITH_WARPCAST_HEADER",
-        "payload": "REPLACE_WITH_WARPCAST_PAYLOAD",
-        "signature": "REPLACE_WITH_WARPCAST_SIGNATURE"
-    },
-    "miniapp": {
-        "version": "1",
-        "name": "BMAD Horse Racing v6",
-        "subtitle": "Retro arcade horse racing game",
-        "description": "Bet on horses, watch exciting races, and climb the leaderboard in this retro-style horse racing game. Connect your wallet to save your score!",
-        "screenshotUrls": [
-            "https://bmadv6.vercel.app/splash.png"
-        ],
-        "iconUrl": "https://bmadv6.vercel.app/icon.png",
-        "splashImageUrl": "https://bmadv6.vercel.app/splash.png",
-        "splashBackgroundColor": "#1a1a2e",
-        "homeUrl": "https://bmadv6.vercel.app",
-        "webhookUrl": "https://bmadv6.vercel.app/api/frame",
-        "primaryCategory": "games",
-        "tags": [
-            "arcade",
-            "racing",
-            "retro",
-            "leaderboard"
-        ],
-        "heroImageUrl": "https://bmadv6.vercel.app/splash.png",
-        "tagline": "Race, Bet, Win, Repeat!",
-        "ogTitle": "BMAD Horse Racing v6",
-        "ogDescription": "Retro arcade horse racing game on Base",
-        "ogImageUrl": "https://bmadv6.vercel.app/splash.png"
-    },
-    "baseBuilder": {
-        "ownerAddress": "0xYOUR_WALLET_ADDRESS_FROM_BASE_BUILD"
-    }
+  "accountAssociation": {
+    "header": "eyJmaWQiOjc0MDkzNywidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweGY3ODkxQTBDYzdBMUU0MjcyYjg1ZGY1ZmUwNDJjODhkOGYzNzk3ZDEifQ",
+    "payload": "eyJkb21haW4iOiJob3JzZXJhY2luZzY2Ni52ZXJjZWwuYXBwIn0",
+    "signature": "5gfT0piwPozJvIxcCHcegCu0m4/2OVdQiHH9bSaAWvduf5b8f+tvXCJ6HZ44hoA61iyu4BmFvK7Kpcku60TP4Rw="
+  }
 }
