@@ -1,4 +1,22 @@
 {
+  "version": "1",
+  "miniapp": {
+    "name": "Horse Racing",
+    "subtitle": "Retro Arcade Racing Game",
+    "description": "Bet on 10 unique horses, watch thrilling races, and climb the leaderboard! Retro pixel art racing game on Base network.",
+    "screenshotUrls": ["https://horseracing666.vercel.app/splash.png"],
+    "iconUrl": "https://horseracing666.vercel.app/logo.png",
+    "splashImageUrl": "https://horseracing666.vercel.app/splash.png",
+    "splashBackgroundColor": "#1a1a2e",
+    "homeUrl": "https://horseracing666.vercel.app",
+    "primaryCategory": "game",
+    "tags": ["racing", "betting", "arcade", "retro", "base"],
+    "heroImageUrl": "https://horseracing666.vercel.app/splash.png",
+    "tagline": "🏇 Bet, Race, Win!",
+    "ogTitle": "Horse Racing - Retro Arcade Game",
+    "ogDescription": "Bet on 10 unique horses and win big! Retro pixel art racing game.",
+    "ogImageUrl": "https://horseracing666.vercel.app/splash.png"
+  },
   "accountAssociation": {
     "header": "eyJmaWQiOjc0MDkzNywidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweGY3ODkxQTBDYzdBMUU0MjcyYjg1ZGY1ZmUwNDJjODhkOGYzNzk3ZDEifQ",
     "payload": "eyJkb21haW4iOiJob3JzZXJhY2luZzY2Ni52ZXJjZWwuYXBwIn0",
