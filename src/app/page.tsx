@@ -9,6 +9,8 @@ import BettingPanel from '@/components/BettingPanel'
 import RaceTrack from '@/components/RaceTrack'
 import ScrollingStats from '@/components/ScrollingStats'
 import Leaderboard from '@/components/Leaderboard'
+import OnboardingModal from '@/components/OnboardingModal'
+import UserProfile from '@/components/UserProfile'
 import { usePoints } from '@/hooks/usePoints'
 import { useRace } from '@/hooks/useRace'
 import { useLeaderboard } from '@/hooks/useLeaderboard'
@@ -52,10 +54,14 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white p-4">
+      {/* Onboarding Modal */}
+      <OnboardingModal />
+
       {/* Header */}
-      <header className="max-w-7xl mx-auto mb-8 flex justify-between items-center">
+      <header className="max-w-7xl mx-auto mb-8 flex justify-between items-center flex-wrap gap-4">
         <Logo />
         <div className="flex items-center gap-4">
+          <UserProfile showPoints points={points} />
           <PointsDisplay points={points} addPoints={addPoints} />
           <ConnectWallet />
         </div>

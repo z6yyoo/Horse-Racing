@@ -13,7 +13,7 @@ export function Providers({ children }: { children: ReactNode }) {
     useEffect(() => {
         setMounted(true)
 
-        // Initialize Farcaster MiniApp SDK
+        // Initialize MiniApp SDK
         const load = async () => {
             try {
                 await sdk.actions.ready()

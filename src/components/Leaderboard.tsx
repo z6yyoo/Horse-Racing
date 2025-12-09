@@ -3,6 +3,24 @@
 import { useLeaderboard } from '@/hooks/useLeaderboard'
 import { Trophy, Medal, Award } from 'lucide-react'
 
+// Generate avatar from address
+function generateAvatar(address: string): string {
+    return `https://api.dicebear.com/7.x/avataaars/svg?seed=${address}`
+}
+
+// Generate username from address
+function generateUsername(address: string): string {
+    const hash = address.toLowerCase().slice(2)
+    const adjectives = ['Swift', 'Lucky', 'Bold', 'Swift', 'Brave', 'Wild', 'Fast', 'Strong']
+    const nouns = ['Racer', 'Champion', 'Winner', 'Rider', 'Player', 'Jockey', 'Star', 'Pro']
+
+    const adjIndex = parseInt(hash.slice(0, 8), 16) % adjectives.length
+    const nounIndex = parseInt(hash.slice(8, 16), 16) % nouns.length
+    const number = parseInt(hash.slice(-4), 16) % 9999
+
+    return `${adjectives[adjIndex]}${nouns[nounIndex]}${number}`
+}
+
 export default function Leaderboard() {
     const { leaderboard, getPlayerRank } = useLeaderboard()
     const playerRank = getPlayerRank()
@@ -30,26 +48,35 @@ export default function Leaderboard() {
             )}
 
             <div className="space-y-2">
-                {leaderboard.map((entry, index) => (
-                    <div
-                        key={entry.address}
-                        className="flex items-center gap-3 p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
-                    >
-                        <div className="w-8 flex justify-center">
-                            {getRankIcon(index + 1)}
-                        </div>
+                {leaderboard.map((entry, index) => {
+                    const avatar = generateAvatar(entry.address)
+                    const username = generateUsername(entry.address)
 
-                        <div className="flex-1">
-                            <p className="font-mono text-sm">{entry.displayName}</p>
-                            <p className="text-xs text-gray-400">{entry.wins} wins</p>
-                        </div>
+                    return (
+                        <div
+                            key={entry.address}
+                            className="flex items-center gap-3 p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
+                        >
+                            <div className="w-8 flex justify-center">
+                                {getRankIcon(index + 1)}
+                            </div>
 
-                        <div className="text-right">
-                            <p className="font-bold text-yellow-400">{entry.points.toLocaleString()}</p>
-                            <p className="text-xs text-gray-400">points</p>
+                            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-yellow-500/50 flex-shrink-0">
+                                <img src={avatar} alt={username} className="w-full h-full object-cover" />
+                            </div>
+
+                            <div className="flex-1 min-w-0">
+                                <p className="font-semibold text-sm truncate">{username}</p>
+                                <p className="text-xs text-gray-400">{entry.wins} wins</p>
+                            </div>
+
+                            <div className="text-right">
+                                <p className="font-bold text-yellow-400">{entry.points.toLocaleString()}</p>
+                                <p className="text-xs text-gray-400">points</p>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    )
+                })}
 
                 {leaderboard.length === 0 && (
                     <p className="text-center text-gray-500 py-8">
