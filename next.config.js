@@ -8,6 +8,7 @@ const nextConfig = {
             },
         ],
     },
+    turbopack: {},
     webpack: (config, { isServer }) => {
         config.resolve.fallback = {
             ...config.resolve.fallback,
