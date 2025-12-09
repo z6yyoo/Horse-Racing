@@ -1,7 +1,6 @@
 'use client'
 
-import { useWriteContract, useReadContract, useWaitForTransactionReceipt, useCapabilities } from 'wagmi'
-import { useSendCalls } from 'wagmi/experimental'
+import { useWriteContract, useReadContract, useWaitForTransactionReceipt, useCapabilities, useSendCalls } from 'wagmi'
 import { encodeFunctionData } from 'viem'
 import { base } from 'wagmi/chains'
 import { HORSE_RACING_ABI, HORSE_RACING_ADDRESS } from '@/contracts/HorseRacingABI'

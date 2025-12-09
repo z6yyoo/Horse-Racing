@@ -1,6 +1,6 @@
 'use client'
 
-import { useSendCalls, useCapabilities } from 'wagmi/experimental'
+import { useSendCalls, useCapabilities } from 'wagmi'
 import { useAccount } from 'wagmi'
 import { encodeFunctionData } from 'viem'
 import { HORSE_RACING_ABI, HORSE_RACING_ADDRESS } from '@/contracts/HorseRacingABI'
