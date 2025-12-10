@@ -1,10 +1,27 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    async headers() {
+        return [
+            {
+                source: '/:path*',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'public, max-age=3600, must-revalidate',
+                    },
+                ],
+            },
+        ]
+    },
     images: {
         remotePatterns: [
             {
                 protocol: 'https',
                 hostname: 'bmadv6.vercel.app',
+            },
+            {
+                protocol: 'https',
+                hostname: 'horseracing666.vercel.app',
             },
         ],
     },

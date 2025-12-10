@@ -25,12 +25,28 @@ export const metadata: Metadata = {
     }],
   },
   other: {
-    "fc:frame": "vNext",
-    "fc:frame:image": `${DOMAIN}/splash.png`,
-    "fc:frame:image:aspect_ratio": "1.91:1",
-    "fc:frame:button:1": "🏇 Start Racing",
-    "fc:frame:button:1:action": "link",
-    "fc:frame:button:1:target": DOMAIN,
+    "fc:miniapp": JSON.stringify({
+      version: "1",
+      imageUrl: `${DOMAIN}/splash.png`,
+      button: {
+        title: "Play Now",
+        action: {
+          type: "launch_miniapp",
+          url: DOMAIN
+        }
+      }
+    }),
+    "fc:frame": JSON.stringify({
+      version: "1",
+      imageUrl: `${DOMAIN}/splash.png`,
+      button: {
+        title: "Play Now",
+        action: {
+          type: "launch_frame",
+          url: DOMAIN
+        }
+      }
+    }),
   },
 }
 
