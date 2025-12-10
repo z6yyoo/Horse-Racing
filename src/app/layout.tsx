@@ -43,6 +43,7 @@ export const metadata: Metadata = {
         title: "Play Now",
         action: {
           type: "launch_frame",
+          name: "Horse Racing",
           url: DOMAIN
         }
       }
