@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     images: [{
       url: `${DOMAIN}/splash.png`,
       width: 1200,
-      height: 630,
+      height: 800,
       alt: "Horse Racing Game",
     }],
   },
